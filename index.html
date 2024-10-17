@@ -11,47 +11,26 @@
     <header>
         <h1>Restaurant Ordering System</h1>
     </header>
-
-    <section class="menu">
+    <div class="create-order-btn">CREATE ORDER</div>
+    <section class="menu d-none">
         <h2>Menu</h2>
-        <ul id="menu-items">
-            <!--            <li>-->
-            <!--                <span class="item-name">Burger</span>-->
-            <!--                <span class="item-price">100</span>-->
-            <!--                <button class="add-button">Add to Order</button>-->
-            <!--            </li>-->
-            <!--            <li>-->
-            <!--                <span class="item-name">Pizza</span>-->
-            <!--                <span class="item-price">80</span>-->
-            <!--                <button class="add-button">Add to Order</button>-->
-            <!--            </li>-->
-            <!--            <li>-->
-            <!--                <span class="item-name">Fries</span>-->
-            <!--                <span class="item-price">60</span>-->
-            <!--                <button class="add-button">Add to Order</button>-->
-            <!--            </li>-->
-            <!--            <li>-->
-            <!--                <span class="item-name">Ice Cream</span>-->
-            <!--                <span class="item-price">50</span>-->
-            <!--                <button class="add-button">Add to Order</button>-->
-            <!--            </li>-->
-            <!--            <li>-->
-            <!--                <span class="item-name">Cake</span>-->
-            <!--                <span class="item-price">55</span>-->
-            <!--                <button class="add-button">Add to Order</button>-->
-            <!--            </li>-->
-        </ul>
+        <ul id="menu-items"></ul>
     </section>
 
-    <section class="order">
+    <section class="order d-none">
         <h2>Current Order</h2>
         <ul id="order-items"></ul>
         <div class="total">
             <span id="order-number"></span>
-            <strong>Total Amount: </strong>
-            <span id="total-amount">0</span>
+            <strong style="font-size: 28px;">Total Amount: </strong>
+            <span style="color: #28a745; font-size: 28px; font-weight: bold" id="total-amount">0</span>
         </div>
         <button id="place-order">Place Order</button>
+    </section>
+
+    <section class="history d-none">
+        <h2>Order history</h2>
+        <button class="history-btn">Show order history</button>
     </section>
 </div>
 

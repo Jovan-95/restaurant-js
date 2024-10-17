@@ -25,8 +25,27 @@ h2 {
     color: #555;
 }
 
+.create-order-btn {
+    font-size: 32px;
+    background: brown;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.create-order-btn:hover {
+    transform: scale(1.05);
+}
+
 .menu, .order {
     margin-bottom: 20px;
+}
+
+.d-none {
+    opacity: 0;
 }
 
 ul {
@@ -59,7 +78,7 @@ li {
 }
 
 .remove-button {
-    background-color: #e52121;
+    background-color: brown;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -76,5 +95,37 @@ li {
 }
 
 .active {
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid brown;
+}
+
+.history-nums {
+    background: brown;
+    color: white;
+    margin: 6px;
+    padding: 8px;
+    font-size: 18px;
+}
+
+#place-order {
+    font-size: 24px;
+    background: brown;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+}
+
+.history-btn {
+    font-size: 24px;
+    background: brown;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
 }
