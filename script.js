@@ -2,8 +2,11 @@
 const menuWrapper = document.querySelector('.menu')
 const orderWrapper = document.querySelector('.order')
 const historyWrapper = document.querySelector('.history')
-const historyBtn = document.querySelector('.history-btn')
-
+const historyBtn = document.querySelector('.show-history-btn')
+const selectCatMainBtn = document.querySelector('.select-cat-1');
+const selectCatAppetizerBtn = document.querySelector('.select-cat-2');
+const selectCatDessertBtn = document.querySelector('.select-cat-3');
+const selectAllCat = document.querySelector('.select-all-cat')
 const menuList = document.querySelector('#menu-items');
 const orderItems = document.querySelector('#order-items');
 const totalAmount = document.querySelector('#total-amount');
@@ -80,7 +83,11 @@ class Restaurant {
     getOrderByNum(orderNum) {
         let orderByNum = this.orders.find(order => order.orderNumber === orderNum);
         console.log(orderByNum)
-        this.searchedOrdersByNum.push(orderByNum)
+        if (orderByNum) {
+            this.searchedOrdersByNum = [orderByNum];
+        } else {
+            this.searchedOrdersByNum = [];
+        }
     }
 }
 
@@ -125,87 +132,102 @@ createOrderBtn.addEventListener('click', function () {
     historyWrapper.classList.remove('d-none')
 
     createOrderBtn.classList.add('d-none')
-
-
-})
-
-restaurant.menu.forEach((item) => {
-    let createdOrderItem;
-    let li = document.createElement('li');
-    menuList.appendChild(li);
-
-    let spanName = document.createElement('span');
-    spanName.classList.add('item-name');
-    li.appendChild(spanName);
-
-    let spanPrice = document.createElement('span');
-    spanPrice.classList.add('item-price');
-    li.appendChild(spanPrice);
-
-    let addBtn = document.createElement('button');
-    addBtn.classList.add('add-button');
-    li.appendChild(addBtn);
-
-    let removeBtn = document.createElement('button');
-    removeBtn.classList.add('remove-button')
-    li.appendChild(removeBtn);
-
-
-    spanName.innerHTML = `${item.name}`;
-    spanPrice.innerHTML = `${item.price}`;
-    addBtn.innerHTML = 'Add to Order';
-    removeBtn.innerHTML = 'Remove from order';
-
-    addBtn.addEventListener('click', function (event) {
-        li.classList.add('active')
-
-
-        createdOrder.addOrderItem(item);
-
-        // console.log(restaurant)
-
-        createdOrder.items.forEach((item) => {
-            createdOrderItem = item;
-        });
-
-        orderNumberDisplay.innerHTML = `<div style="color: blue; font-size: 24px;">ORDER NUMBER:${createdOrder.orderNumber}</div>`;
-
-        orderItems.innerHTML += `<div style="color: blue; font-size: 24px;">ORDER NAME:${createdOrderItem.name}</div>`
-
-        totalAmount.innerHTML = `<div>${createdOrder.totalAmount}$</div>`
-        // console.log(createdOrder)
-        console.log(restaurant)
-
-    });
-
-    removeBtn.addEventListener('click', function () {
-        li.classList.remove('active');
-        let notRemovedItems = [];
-
-        totalAmount.innerHTML = ``;
-        orderItems.innerHTML = ``;
-
-        createdOrder.removeOrderItem(item.name);
-        createdOrder.calculateTotal();
-
-
-        createdOrder.items.forEach((item) => {
-            createdOrderItem = item.name;
-            notRemovedItems.push(createdOrderItem)
-        });
-
-        totalAmount.innerHTML = `<div>${createdOrder.totalAmount}$</div>`
-
-        console.log(notRemovedItems)
-        notRemovedItems.forEach((el) => {
-            // console.log(el)
-            orderItems.innerHTML += `<div style="color: blue; font-size: 24px;">ORDER NAME:${el}</div>`
-        })
-
-
-    })
 });
 
+function renderItems(category) {
+    menuList.innerHTML = '';
+    let createdOrderItem;
+    restaurant.menu.forEach((item) => {
+        if (category === 'all' || item.category === category) {
+
+            let li = document.createElement('li');
+            menuList.appendChild(li);
+
+            let spanName = document.createElement('span');
+            spanName.classList.add('item-name');
+            li.appendChild(spanName);
+
+            let spanPrice = document.createElement('span');
+            spanPrice.classList.add('item-price');
+            li.appendChild(spanPrice);
+
+            let addBtn = document.createElement('button');
+            addBtn.classList.add('add-button');
+            li.appendChild(addBtn);
+
+            let removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-button')
+            li.appendChild(removeBtn);
+
+            spanName.innerHTML = `${item.name}`;
+            spanPrice.innerHTML = `${item.price}`;
+            addBtn.innerHTML = 'Add to Order';
+            removeBtn.innerHTML = 'Remove from order';
+
+            addBtn.addEventListener('click', function (event) {
+                li.classList.add('active')
+
+
+                createdOrder.addOrderItem(item);
+
+                // console.log(restaurant)
+
+                createdOrder.items.forEach((item) => {
+                    createdOrderItem = item;
+                });
+
+                orderNumberDisplay.innerHTML = `<div style="color: blue; font-size: 24px;">ORDER NUMBER:${createdOrder.orderNumber}</div>`;
+
+                orderItems.innerHTML += `<div style="color: blue; font-size: 24px;">ORDER NAME:${createdOrderItem.name}</div>`
+
+                totalAmount.innerHTML = `<div>${createdOrder.totalAmount}$</div>`
+                // console.log(createdOrder)
+                console.log(restaurant)
+
+            });
+
+            removeBtn.addEventListener('click', function () {
+                li.classList.remove('active');
+                let notRemovedItems = [];
+
+                totalAmount.innerHTML = ``;
+                orderItems.innerHTML = ``;
+
+                createdOrder.removeOrderItem(item.name);
+                createdOrder.calculateTotal();
+
+
+                createdOrder.items.forEach((item) => {
+                    createdOrderItem = item.name;
+                    notRemovedItems.push(createdOrderItem)
+                });
+
+                totalAmount.innerHTML = `<div>${createdOrder.totalAmount}$</div>`
+
+                console.log(notRemovedItems)
+                notRemovedItems.forEach((el) => {
+                    // console.log(el)
+                    orderItems.innerHTML += `<div style="color: blue; font-size: 24px;">ORDER NAME:${el}</div>`
+                })
+
+
+            })
+        }
+    });
+}
+
+selectCatMainBtn.addEventListener('click', function () {
+    renderItems('main course');
+});
+selectCatAppetizerBtn.addEventListener('click', function () {
+    renderItems('appetizer');
+});
+selectCatDessertBtn.addEventListener('click', function () {
+    renderItems('dessert');
+});
+selectAllCat.addEventListener('click', function () {
+    renderItems('all');
+});
 
 placeOrderBtn.addEventListener('click', function () {
     if (createdOrder.items.length > 0) {
@@ -214,28 +236,25 @@ placeOrderBtn.addEventListener('click', function () {
             el.classList.remove('active');
         });
 
-        orderNumberDisplay.innerHTML = `<div style="color: blue; font-size: 24px;">ORDER NUMBER:${createdOrder.orderNumber++}</div>`;
-        orderItems.innerHTML = alert('Your order is created!');
-        orderItems.innerHTML = `Your order is preparing...`
-        totalAmount.innerHTML = `<div>0</div>`;
-
-        // createdOrder.items = [];
-
+        alert('Your order has been placed!');
+        orderNumberDisplay.innerHTML = `<div style="color: blue; font-size: 24px;">ORDER NUMBER: ${createdOrder.orderNumber}</div>`;
+        orderItems.innerHTML = `Your order is being prepared...`;
+        totalAmount.innerHTML = `<div>0$</div>`;
 
         createdOrder = restaurant.createOrder();
-        console.log(restaurant)
-    } else {
-        orderItems.innerHTML = alert('Your order is empty!!!');
-        orderItems.innerHTML = `Add menu items to your order`
 
+        console.log(restaurant);
+    } else {
+        alert('Your order is empty!');
+        orderItems.innerHTML = `Add menu items to your order.`;
     }
-})
+});
 
 historyBtn.addEventListener('click', function () {
+    restaurant.orders.pop();
     restaurant.orders.forEach((order) => {
         console.log(order);
         historyWrapper.innerHTML += `<div class="history-nums">Order numbers: ${order.orderNumber}</div> `
-
     })
 
     if (restaurant.orders.length >= 1) {
@@ -249,14 +268,34 @@ historyBtn.addEventListener('click', function () {
 
         function searchOrderByNum() {
             restaurant.getOrderByNum(Number(input.value));
-            console.log(restaurant.searchedOrdersByNum);
-            restaurant.searchedOrdersByNum.forEach((el) => {
-                historyWrapper.innerHTML += `<div>${el.orderNumber}, ${el.totalAmount}</div> `
-            })
+
+            let searchResultsWrapper = document.querySelector('.search-results');
+            if (!searchResultsWrapper) {
+                searchResultsWrapper = document.createElement('div');
+                searchResultsWrapper.classList.add('search-results');
+                historyWrapper.appendChild(searchResultsWrapper);
+            }
+            searchResultsWrapper.innerHTML = '';
+
+            if (restaurant.searchedOrdersByNum.length > 0) {
+                restaurant.searchedOrdersByNum.forEach((el) => {
+                    el.items.forEach((menuItem) => {
+                        searchResultsWrapper.innerHTML = `
+                            <div class="history-nums">
+                                <div>Order number: ${el.orderNumber}</div>
+                                <div>Total price: ${el.totalAmount}</div>
+                                <div>Name: ${menuItem.name}</div>
+                                <div>Category: ${menuItem.category}</div>
+                            </div>`;
+                    });
+                });
+            } else {
+                searchResultsWrapper.innerHTML = `<div class="history-nums">No order found for number: ${input.value}</div>`;
+            }
         }
 
         searchOrderBtn.addEventListener('click', searchOrderByNum)
     }
 })
 
-// Fix order history duplicate, list searched orders properly
+// List searched orders properly

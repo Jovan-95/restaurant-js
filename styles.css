@@ -45,7 +45,7 @@ h2 {
 }
 
 .d-none {
-    opacity: 0;
+    display: none;
 }
 
 ul {
@@ -118,12 +118,14 @@ li {
     border: none;
 }
 
-.history-btn {
-    font-size: 24px;
+.history-btn  {
+    margin-top: 16px;
+    width: 100%;
+    font-size: 18px;
     background: brown;
     color: white;
     text-align: center;
-    padding: 12px;
+    padding: 8px;
     border-radius: 24px;
     cursor: pointer;
     transition: 0.3s;
